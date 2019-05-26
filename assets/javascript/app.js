@@ -27,17 +27,12 @@ $(document).ready(function () {
         var gifValue = $(this).data("value");
         var gifMoving = $(this).data("moving");
         if (gifMoving === "off") {
-            gifMoving = $(this).attr("data-moving", "on");
-            $(this).attr("data-moving", "on");
+            $(this).data("moving", "on");
             $(this).attr("src", topicGifs[gifValue].images.fixed_height.url);
         } else if (gifMoving === "on") {
-            gifMoving = $(this).attr("data-moving", "off");
+            $(this).data("moving", "off");
             $(this).attr("src", topicGifs[gifValue].images.fixed_height_still.url);
-        }
-        // var activeGif = topicGifs[gifValue].images.fixed_height.url;
-        // console.log(gifValue);
-
-        // $(this).attr("src", topicGifs[gifValue].images.fixed_height.url);
+        };
     });
 
     function generateURL(str) {
