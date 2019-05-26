@@ -36,7 +36,7 @@ $(document).ready(function () {
     });
 
     function generateURL(str) {
-        return queryString = queryURL + "api_key=" + queryApiKey + "&" + "q=" + str + "&" + "limit=15";
+        return queryString = queryURL + "api_key=" + queryApiKey + "&" + "q=" + str + "&" + "limit=10";
     }
 
     function getGifs(str) {
@@ -46,17 +46,28 @@ $(document).ready(function () {
         }).then(function (response) {
             for (var j = 0; j < response.data.length; j++) {
                 topicGifs.push(response.data[j]);
-                var imageGif = $("<img>").attr("src", topicGifs[j].images.fixed_height_still.url);
-                imageGif.addClass("gif");
-                imageGif.attr("alt", topicGifs[j].title);
-                imageGif.attr("data-value", j);
-                imageGif.attr("data-moving", "off");
-                $("#gif-gallery").append(imageGif);
+                generateGif(j);
             };
         });
     };
 
-    function clearGifs () {
+    function generateGif(num) {
+        var imageContainer = $("<figure>").addClass("figure");
+        var imageGif = $("<img>").attr("src", topicGifs[num].images.fixed_height_still.url);
+        imageGif.addClass("gif figure-img img-fluid rounded");
+        imageGif.attr("alt", topicGifs[num].title);
+        imageGif.attr("data-value", num);
+        imageGif.attr("data-moving", "off");
+        var imageRating = $("<figcaption>");
+        var ratingText = "Rated: " + topicGifs[num].rating.toUpperCase();
+        imageRating.text(ratingText);
+        imageRating.addClass("figure-caption text-left");
+        $(imageContainer).append(imageGif);
+        $(imageContainer).append(imageRating);
+        $("#gif-gallery").append(imageContainer);
+    }
+
+    function clearGifs() {
         $("#gif-gallery").empty();
     };
 
