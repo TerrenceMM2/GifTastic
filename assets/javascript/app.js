@@ -11,6 +11,8 @@ $(document).ready(function () {
     var activeGif = "";
     var offsetNumber = 0;
 
+    var favGifs = [];
+
     // var nutritionTopic = activeGif;
     // var nutritionApiKey = "ef1557de06mshdcf3099eaace12dp128ffejsn390f022c636c";
     // var nutritionURL = "https://nutritionix-api.p.rapidapi.com/v1_1/search/";
@@ -20,7 +22,7 @@ $(document).ready(function () {
         generateButton(topic[i]);
     };
 
-    $("#button-group").on("click", ".btn", function () {
+    $("#button-group").on("click", ".btn", function() {
         $("#more-gifs").show();
         offsetNumber = 0;
         clearGifs();
@@ -31,7 +33,7 @@ $(document).ready(function () {
         getGifs(queryString);
     });
 
-    $("#gif-gallery").on("click", ".gif", function () {
+    $("#gif-gallery").on("click", ".gif", function() {
         var gifValue = $(this).data("value");
         var gifMoving = $(this).data("moving");
         if (gifMoving === "off") {
@@ -43,7 +45,7 @@ $(document).ready(function () {
         };
     });
 
-    $("#user-submit").on("click", function () {
+    $("#user-submit").on("click", function() {
         event.preventDefault();
         var searchedWord = $("#user-input").val().trim();
         topicGifs.push(searchedWord);
@@ -51,14 +53,28 @@ $(document).ready(function () {
         $("#user-input").val("");
     });
 
-    $("#more-gifs").on("click", function () {
+    $("#more-gifs").on("click", function() {
         event.preventDefault();
         generateURL(activeGif, offsetNumber);
         getGifs(queryString);
     });
 
-    $("#fav").on("click", function () {
-        console.log(this);
+    $("#gif-gallery").on("click", "#fav", function() {
+        var favValue = $(this).data("fav")
+        var dataValue = $(this).data("value");
+        console.log(topicGifs);
+        console.log(dataValue);
+        if (favValue === false) {
+            $(this).removeClass("far").addClass("fas");
+            $(this).data("fav", true);
+            favGifs.push(topicGifs[dataValue]);
+            console.log(favGifs);
+        } else {
+            $(this).removeClass("fas").addClass("far");
+            $(this).data("fav", false);
+            favGifs.splice(topicGifs[dataValue], 1);
+            console.log(favGifs);
+        };
     });
 
     function generateButton(str) {
@@ -98,7 +114,7 @@ $(document).ready(function () {
             imageGif.attr("data-value", k);
             imageGif.attr("data-moving", "off");
             var imageFav = $("<figcaption>");
-            var imageText = '<i id="fav" class="fa-2x far fa-star float-right"></i>';
+            var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k +'></i>';
             imageFav.html(imageText);
             var imageRating = $("<figcaption>");
             var ratingText = "Rated: " + topicGifs[k].rating.toUpperCase();
