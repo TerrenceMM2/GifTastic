@@ -22,7 +22,7 @@ $(document).ready(function () {
         generateButton(topic[i]);
     };
 
-    $("#button-group").on("click", ".btn", function() {
+    $("#button-group").on("click", ".btn", function () {
         $("#more-gifs").show();
         offsetNumber = 0;
         clearGifs();
@@ -33,7 +33,7 @@ $(document).ready(function () {
         getGifs(queryString);
     });
 
-    $("#gif-gallery").on("click", ".gif", function() {
+    $("#gif-gallery").on("click", ".gif", function () {
         var gifValue = $(this).data("value");
         var gifMoving = $(this).data("moving");
         if (gifMoving === "off") {
@@ -45,36 +45,52 @@ $(document).ready(function () {
         };
     });
 
-    $("#user-submit").on("click", function() {
+    $("#user-submit").on("click", function () {
         event.preventDefault();
         var searchedWord = $("#user-input").val().trim();
-        topicGifs.push(searchedWord);
-        generateButton(searchedWord);
-        $("#user-input").val("");
+        if (searchedWord === "") {
+            $(".modal").modal("show");
+        } else {
+            topicGifs.push(searchedWord);
+            generateButton(searchedWord);
+            $("#user-input").val("");
+        };
     });
 
-    $("#more-gifs").on("click", function() {
+    $("#more-gifs").on("click", function () {
         event.preventDefault();
         generateURL(activeGif, offsetNumber);
         getGifs(queryString);
     });
 
-    $("#gif-gallery").on("click", "#fav", function() {
+    $("#gif-gallery").on("click", "#fav", function () {
         var favValue = $(this).data("fav")
         var dataValue = $(this).data("value");
-        console.log(topicGifs);
-        console.log(dataValue);
+        var gifIdValue = $(this).data("id");
+        console.log(gifIdValue);
         if (favValue === false) {
             $(this).removeClass("far").addClass("fas");
             $(this).data("fav", true);
+            topicGifs[dataValue].favorite = true;
             favGifs.push(topicGifs[dataValue]);
             console.log(favGifs);
         } else {
             $(this).removeClass("fas").addClass("far");
             $(this).data("fav", false);
-            favGifs.splice(topicGifs[dataValue], 1);
+            topicGifs[dataValue].favorite = false;
+            for (var l = 0; l < favGifs.length; l++) {
+                if (favGifs[l].id === gifIdValue) {
+                    favGifs.splice(l, 1);
+                };
+            };
             console.log(favGifs);
         };
+    });
+
+    $("#fav-gifs").on("click", function () {
+        event.preventDefault();
+        clearGifs();
+        generateGif(0, favGifs);
     });
 
     function generateButton(str) {
@@ -97,31 +113,33 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             for (var j = 0; j < response.data.length; j++) {
+                response.data[j].favorite = false;
                 topicGifs.push(response.data[j]);
             };
-            generateGif(offsetNumber);
+            generateGif(offsetNumber, topicGifs);
             offsetNumber += 10;
+            console.log(topicGifs);
         });
     };
 
-    function generateGif(num) {
+    function generateGif(num, arr) {
         var index = num + 10;
         for (var k = num; k < index; k++) {
             var imageContainer = $("<figure>").addClass("figure");
-            var imageGif = $("<img>").attr("src", topicGifs[k].images.fixed_height_still.url);
+            var imageGif = $("<img>").attr("src", arr[k].images.fixed_height_still.url);
             imageGif.addClass("gif figure-img img-fluid rounded");
-            imageGif.attr("alt", topicGifs[k].title);
+            imageGif.attr("alt", arr[k].title);
             imageGif.attr("data-value", k);
             imageGif.attr("data-moving", "off");
             var imageFav = $("<figcaption>");
-            var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k +'></i>';
+            var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
             imageFav.html(imageText);
             var imageRating = $("<figcaption>");
-            var ratingText = "Rated: " + topicGifs[k].rating.toUpperCase();
+            var ratingText = "Rated: " + arr[k].rating.toUpperCase();
             imageRating.text(ratingText);
             imageRating.addClass("figure-caption text-left");
             var imageTitle = $("<figcaption>");
-            var titleText = topicGifs[k].title.italics();
+            var titleText = arr[k].title.italics();
             imageTitle.html(titleText);
             imageTitle.addClass("figure-caption text-left");
             $(imageContainer).append(imageGif);
@@ -131,6 +149,34 @@ $(document).ready(function () {
             $("#gif-gallery").append(imageContainer);
         };
     };
+
+    // function generateGif(num) {
+    //     var index = num + 10;
+    //     for (var k = num; k < index; k++) {
+    //         var imageContainer = $("<figure>").addClass("figure");
+    //         var imageGif = $("<img>").attr("src", topicGifs[k].images.fixed_height_still.url);
+    //         imageGif.addClass("gif figure-img img-fluid rounded");
+    //         imageGif.attr("alt", topicGifs[k].title);
+    //         imageGif.attr("data-value", k);
+    //         imageGif.attr("data-moving", "off");
+    //         var imageFav = $("<figcaption>");
+    //         var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k +'></i>';
+    //         imageFav.html(imageText);
+    //         var imageRating = $("<figcaption>");
+    //         var ratingText = "Rated: " + topicGifs[k].rating.toUpperCase();
+    //         imageRating.text(ratingText);
+    //         imageRating.addClass("figure-caption text-left");
+    //         var imageTitle = $("<figcaption>");
+    //         var titleText = topicGifs[k].title.italics();
+    //         imageTitle.html(titleText);
+    //         imageTitle.addClass("figure-caption text-left");
+    //         $(imageContainer).append(imageGif);
+    //         $(imageContainer).append(imageFav);
+    //         $(imageContainer).append(imageRating);
+    //         $(imageContainer).append(imageTitle);
+    //         $("#gif-gallery").append(imageContainer);
+    //     };
+    // };
 
     function clearGifs() {
         $("#gif-gallery").empty();

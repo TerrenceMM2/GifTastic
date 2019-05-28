@@ -9,3 +9,7 @@
 .far {
     color: darkgray;
 }
+
+.modal-body p {
+    margin: 0;
+}
