@@ -1,3 +1,17 @@
+.title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 5rem;
+    padding: 1rem;
+}
+
+#letter-g {
+    margin-left: -2rem;
+}
+
+.title-gif {
+    margin-right: -5rem;
+}
+
 #more-gifs {
     display: none;
 }

@@ -22,6 +22,34 @@ $(document).ready(function () {
         generateButton(topic[i]);
     };
 
+    $.ajax({
+        url: "https://api.giphy.com/v1/gifs/26xBJJEETvqGHxVIc?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
+        method: "GET"
+    }).then(function (response) {
+        $("#letter-g").attr("src", response.data.images.fixed_height_small.url)
+    });
+
+    $.ajax({
+        url: "https://api.giphy.com/v1/gifs/l3q2GccupHgLPBqZG?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
+        method: "GET"
+    }).then(function (response) {
+        $("#letter-i").attr("src", response.data.images.fixed_height_small.url)
+    });
+
+    $.ajax({
+        url: "https://api.giphy.com/v1/gifs/l3q2PG0N4D2kUua3e?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
+        method: "GET"
+    }).then(function (response) {
+        $("#letter-f").attr("src", response.data.images.fixed_height_small.url)
+    });
+
+    $.ajax({
+        url: "https://api.giphy.com/v1/gifs/d3mmB85lPiyE5jvq?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
+        method: "GET"
+    }).then(function (response) {
+        $("#letter-s").attr("src", response.data.images.fixed_height_small.url)
+    });
+
     $("#button-group").on("click", ".btn", function () {
         $("#more-gifs").show();
         offsetNumber = 0;
@@ -149,34 +177,6 @@ $(document).ready(function () {
             $("#gif-gallery").append(imageContainer);
         };
     };
-
-    // function generateGif(num) {
-    //     var index = num + 10;
-    //     for (var k = num; k < index; k++) {
-    //         var imageContainer = $("<figure>").addClass("figure");
-    //         var imageGif = $("<img>").attr("src", topicGifs[k].images.fixed_height_still.url);
-    //         imageGif.addClass("gif figure-img img-fluid rounded");
-    //         imageGif.attr("alt", topicGifs[k].title);
-    //         imageGif.attr("data-value", k);
-    //         imageGif.attr("data-moving", "off");
-    //         var imageFav = $("<figcaption>");
-    //         var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k +'></i>';
-    //         imageFav.html(imageText);
-    //         var imageRating = $("<figcaption>");
-    //         var ratingText = "Rated: " + topicGifs[k].rating.toUpperCase();
-    //         imageRating.text(ratingText);
-    //         imageRating.addClass("figure-caption text-left");
-    //         var imageTitle = $("<figcaption>");
-    //         var titleText = topicGifs[k].title.italics();
-    //         imageTitle.html(titleText);
-    //         imageTitle.addClass("figure-caption text-left");
-    //         $(imageContainer).append(imageGif);
-    //         $(imageContainer).append(imageFav);
-    //         $(imageContainer).append(imageRating);
-    //         $(imageContainer).append(imageTitle);
-    //         $("#gif-gallery").append(imageContainer);
-    //     };
-    // };
 
     function clearGifs() {
         $("#gif-gallery").empty();
