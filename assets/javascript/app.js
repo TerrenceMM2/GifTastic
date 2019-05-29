@@ -3,7 +3,7 @@ $(document).ready(function () {
     var titleArray = ["26xBJJEETvqGHxVIc?", "l3q2GccupHgLPBqZG?", "l3q2PG0N4D2kUua3e?", "d3mmB85lPiyE5jvq?"];
     var titleQueryURL = "https://api.giphy.com/v1/gifs/";
 
-    var topic = ["apples", "bananas", "avocados", "bread"];
+    var topic = ["happy", "sad", "disappointed", "mad", "scared", "excited", "mysterious", "mischievous", "crazy", "depressed", "lonely", "confused", "sneaky", "amorous"];
 
     var queryTopic = "";
     var queryApiKey = "k4lIc25Cnm8PVmdTTePqX37D2HFooSyY";
@@ -36,7 +36,6 @@ $(document).ready(function () {
                     url: titleQueryURL + titleArray[t] + "api_key=" + queryApiKey,
                     method: "GET",
                     success: function (response) {
-                        console.log(response.data.images[str].url);
                         $("#letter" + t).attr("src", response.data.images[str].url);
                     }
                 });
@@ -89,13 +88,11 @@ $(document).ready(function () {
         var favValue = $(this).data("fav")
         var dataValue = $(this).data("value");
         var gifIdValue = $(this).data("id");
-        console.log(gifIdValue);
         if (favValue === false) {
             $(this).removeClass("far").addClass("fas");
             $(this).data("fav", true);
             topicGifs[dataValue].favorite = true;
             favGifs.push(topicGifs[dataValue]);
-            console.log(favGifs);
         } else {
             $(this).removeClass("fas").addClass("far");
             $(this).data("fav", false);
@@ -105,7 +102,6 @@ $(document).ready(function () {
                     favGifs.splice(l, 1);
                 };
             };
-            console.log(favGifs);
         };
     });
 
@@ -133,7 +129,7 @@ $(document).ready(function () {
 
     function generateButton(str) {
         var newButton = $("<button>").text(str);
-        newButton.addClass("btn btn-primary btn-lg");
+        newButton.addClass("btn btn-info btn-lg");
         $("#button-group").append(newButton);
     };
 
@@ -156,7 +152,6 @@ $(document).ready(function () {
             };
             generateGif(offsetNumber, topicGifs);
             offsetNumber += 10;
-            console.log(topicGifs);
         });
     };
 
@@ -164,6 +159,7 @@ $(document).ready(function () {
         var index = num + 10;
         for (var k = num; k < index; k++) {
             var imageContainer = $("<figure>").addClass("figure");
+            imageContainer.attr("style", "width: " + arr[k].images.fixed_height_still.width + "px;");
             var imageGif = $("<img>").attr("src", arr[k].images.fixed_height_still.url);
             imageGif.addClass("gif figure-img img-fluid rounded");
             imageGif.attr("alt", arr[k].title);
