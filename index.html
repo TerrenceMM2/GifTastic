@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+  <link id="custom-stylesheet" rel="stylesheet" href="assets/css/style_light.css" type="text/css">
   <link rel="icon" href="assets/images/favicon.png" type="image/gif">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <title>Coursework 6: GifTastic</title>
@@ -20,16 +21,21 @@
 <body>
 
   <header class="row align-items-center justify-content-center">
-    <span class="title">Fun with </span><img class="title-gif" id="letter-g"></img><img class="title-gif"
-      id="letter-i"></img><img class="title-gif" id="letter-f"></img><img class="title-gif" id="letter-s"></img>
+    <span class="title">Fun with </span><img class="title-gif" id="letter0"></img><img class="title-gif"
+      id="letter1"></img><img class="title-gif" id="letter2"></img><img class="title-gif" id="letter3"></img>
   </header>
 
-  <div class="custom-control custom-switch">
-      <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-      <label class="custom-control-label" for="customSwitch1">Movement</label>
-    </div>
+  <div class="text-center custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="movementToggle" checked>
+    <label class="custom-control-label" for="movementToggle">Movement</label>
+  </div>
 
-  <form>
+  <div class="text-center custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="darkModeToggle">
+    <label class="custom-control-label" for="darkModeToggle">Dark Mode</label>
+  </div>
+
+  <form class="user-form">
     <div class="form-row justify-content-center">
       <div class="form-group col-md-auto">
         <label for="user-input">Search</label>
@@ -44,7 +50,7 @@
 
   <div id="button-group" class="row flex-wrap no-gutters"></div>
 
-  <div id="gif-gallery"></div>
+  <div id="gif-gallery" class="d-flex flex-wrap"></div>
 
   <div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

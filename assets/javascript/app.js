@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    var titleArray = ["26xBJJEETvqGHxVIc?", "l3q2GccupHgLPBqZG?", "l3q2PG0N4D2kUua3e?", "d3mmB85lPiyE5jvq?"];
+    var titleQueryURL = "https://api.giphy.com/v1/gifs/";
+
     var topic = ["apples", "bananas", "avocados", "bread"];
 
     var queryTopic = "";
@@ -13,6 +16,8 @@ $(document).ready(function () {
 
     var favGifs = [];
 
+    createGifTitle("fixed_height_small");
+
     // var nutritionTopic = activeGif;
     // var nutritionApiKey = "ef1557de06mshdcf3099eaace12dp128ffejsn390f022c636c";
     // var nutritionURL = "https://nutritionix-api.p.rapidapi.com/v1_1/search/";
@@ -22,33 +27,22 @@ $(document).ready(function () {
         generateButton(topic[i]);
     };
 
-    $.ajax({
-        url: "https://api.giphy.com/v1/gifs/26xBJJEETvqGHxVIc?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
-        method: "GET"
-    }).then(function (response) {
-        $("#letter-g").attr("src", response.data.images.fixed_height_small.url)
-    });
-
-    $.ajax({
-        url: "https://api.giphy.com/v1/gifs/l3q2GccupHgLPBqZG?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
-        method: "GET"
-    }).then(function (response) {
-        $("#letter-i").attr("src", response.data.images.fixed_height_small.url)
-    });
-
-    $.ajax({
-        url: "https://api.giphy.com/v1/gifs/l3q2PG0N4D2kUua3e?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
-        method: "GET"
-    }).then(function (response) {
-        $("#letter-f").attr("src", response.data.images.fixed_height_small.url)
-    });
-
-    $.ajax({
-        url: "https://api.giphy.com/v1/gifs/d3mmB85lPiyE5jvq?api_key=k4lIc25Cnm8PVmdTTePqX37D2HFooSyY",
-        method: "GET"
-    }).then(function (response) {
-        $("#letter-s").attr("src", response.data.images.fixed_height_small.url)
-    });
+    // Nests ajax call within a for loop
+    // Source: https://stackoverflow.com/questions/21373643/jquery-ajax-calls-in-a-for-loop
+    function createGifTitle(str) {
+        for (var t = 0; t < titleArray.length; t++) {
+            (function(t) {
+                $.ajax({
+                    url: titleQueryURL + titleArray[t] + "api_key=" + queryApiKey,
+                    method: "GET",
+                    success: function (response) {
+                        console.log(response.data.images[str].url);
+                        $("#letter" + t).attr("src", response.data.images[str].url);
+                    }
+                });
+            })(t);
+        };
+    };
 
     $("#button-group").on("click", ".btn", function () {
         $("#more-gifs").show();
@@ -121,9 +115,25 @@ $(document).ready(function () {
         generateGif(0, favGifs);
     });
 
+    $("#darkModeToggle").on("click", function () {
+        if ($("#darkModeToggle").prop("checked")) {
+            $("#custom-stylesheet").attr("href", "assets/css/style_dark.css");
+        } else {
+            $("#custom-stylesheet").attr("href", "assets/css/style_light.css");
+        }
+    });
+
+    $("#movementToggle").on("click", function () {
+        if ($("#movementToggle").prop("checked")) {
+            createGifTitle("fixed_height_small");
+        } else {
+            createGifTitle("fixed_height_small_still");
+        }
+    });
+
     function generateButton(str) {
         var newButton = $("<button>").text(str);
-        newButton.addClass("btn btn-primary btn-sm");
+        newButton.addClass("btn btn-primary btn-lg");
         $("#button-group").append(newButton);
     };
 

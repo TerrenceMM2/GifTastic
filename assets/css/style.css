@@ -1,3 +1,8 @@
+body {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .title {
     font-family: 'Luckiest Guy', cursive;
     font-size: 5rem;
@@ -12,16 +17,28 @@
     margin-right: -5rem;
 }
 
+.user-form {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: .6rem;
+}
+
+#gif-gallery {
+    margin-top: 1rem;
+}
+
+figure {
+    margin-right: 1rem;
+}
+
 #more-gifs {
     display: none;
 }
 
-.fas {
-    color: gold;
-}
-
-.far {
-    color: darkgray;
+.btn {
+    margin: 0 .25rem;
 }
 
 .modal-body p {
