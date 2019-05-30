@@ -20,12 +20,16 @@ $(document).ready(function () {
 
     var favGifs = [];
 
+    // Performs an initial AJAX call to create the page title using gifs.
     createGifTitle("fixed_height_small");
 
+    // Generates the initial set of buttons based on the topic array.
     for (var i = 0; i < topic.length; i++) {
         generateButton(topic[i]);
     };
 
+    // If a button within the button-group is clicked ...
+    // ... the additional buttons are show, global variables are reset and set and functions to generate the Gif content and weather content are called.
     $("#button-group").on("click", ".btn", function () {
         $("#more-gifs").css("visibility", "visible");
         $("#clear-gifs").css("visibility", "visible");
@@ -40,6 +44,8 @@ $(document).ready(function () {
         getWeather(weatherQueryString);
     });
 
+    // If a button within the gif-gallery is clicked ...
+    // ... the gif source will toggle between still and moving.
     $("#gif-gallery").on("click", ".gif", function () {
         var gifValue = $(this).data("value");
         var gifMoving = $(this).data("moving");
@@ -52,6 +58,9 @@ $(document).ready(function () {
         };
     });
 
+    // If the submit button is clicked ...
+    // ... a button with the inputted text will be appended to the button-group.
+    // If nothing is found in the text box, a modal message will be displayed.
     $("#user-submit").on("click", function () {
         event.preventDefault();
         var searchedWord = $("#user-input").val().trim();
@@ -64,25 +73,26 @@ $(document).ready(function () {
         };
     });
 
+    // If the "Show Me More" button is clicked ...
+    // ... 10 more gifs will be append to the gif-gallery. The offsetNumber ensures that the next 10 gifs from the searched terms are pulled and displayed.
     $("#more-gifs").on("click", function () {
         event.preventDefault();
         generateURL(activeGif, offsetNumber);
         getGifs(queryString);
     });
 
+    // If a favorite icon is clicked ...
+    // ... the font-awesome icon is changed, the gif object is pushed to the favGifs array, and the data values set.
     $("#gif-gallery").on("click", "#fav", function () {
         var favValue = $(this).data("fav");
         var dataValue = $(this).data("value");
         var gifIdValue = $(this).data("id");
-        console.log(favValue);
         if (favValue === false) {
-            console.log("favorited");
             $(this).removeClass("far").addClass("fas");
             $(this).data("fav", true);
             topicGifs[dataValue].favorite = true;
             favGifs.push(topicGifs[dataValue]);
         } else {
-            console.log("unfavorited");
             $(this).removeClass("fas").addClass("far");
             $(this).data("fav", false);
             topicGifs[dataValue].favorite = false;
@@ -94,6 +104,8 @@ $(document).ready(function () {
         }
     });
 
+    // If the "My Favorites" button is clicked ...
+    // ... The gif are generated based on the storage objects in the favGifs array.
     $("#fav-gifs").on("click", function () {
         event.preventDefault();
         topicGifs = "";
@@ -104,6 +116,8 @@ $(document).ready(function () {
         $("#clear-gifs").css("visibility", "hidden");
     });
 
+    // If the "Clear" button is clicked ...
+    // ... the currently shown gifs are removed.
     $("#clear-gifs").on("click", function () {
         clearGifs();
         clearWeather();
@@ -111,6 +125,7 @@ $(document).ready(function () {
         $("#more-gifs").css("visibility", "hidden");
     });
 
+    // Toggles dark mode (i.e. two different stylesheets).
     $("#darkModeToggle").on("click", function () {
         if ($("#darkModeToggle").prop("checked")) {
             $("#custom-stylesheet").attr("href", "assets/css/style_dark.css");
@@ -119,6 +134,7 @@ $(document).ready(function () {
         }
     });
 
+    // Toggles the movement of the gifts in the title.
     $("#movementToggle").on("click", function () {
         if ($("#movementToggle").prop("checked")) {
             createGifTitle("fixed_height_small");
@@ -143,20 +159,24 @@ $(document).ready(function () {
         };
     };
 
+    // Dynamically generates a new button and appends it to the #button-group div.
     function generateButton(str) {
         var newButton = $("<button>").text(str);
         newButton.addClass("btn btn-info btn-lg");
         $("#button-group").append(newButton);
     };
 
+    // Dynamically generates and returns a new queryString based on the selected button value.
     function generateURL(str, num) {
         return queryString = queryURL + "api_key=" + queryApiKey + "&" + "q=" + str + "&" + "limit=10" + "&" + "offset=" + num;
     };
 
+    // Dynamically generates and returns a new weatherQueryString value based on the selected button value.
     function generateWeatherURL(str) {
         return weatherQueryString = weatherQueryURL + "q=" + str + "&" + "APPID=" + weatherApiKey;
     };
 
+    // The AJAX call to Giphy. A successful request pushes each object to the topicGif array and increments the offsetNumber variable by 10.
     function getGifs(str) {
         $.ajax({
             url: str,
@@ -171,6 +191,7 @@ $(document).ready(function () {
         });
     };
 
+    // Calls the buildGif function based on the length of the response array (10) and appends to the #gif-gallery div.
     function generateGif(num, arr) {
         for (var k = num; k < arr.length; k++) {
             var newGif = buildGif(k, arr);
@@ -178,6 +199,7 @@ $(document).ready(function () {
         };
     };
 
+    // Dynamically creates the Gif parent div and the child elements (rating text, title text, favorite icon, and the gif image).
     function buildGif(num, arr) {
         var imageContainer = $("<figure>").addClass("figure");
         imageContainer.attr("style", "width: " + arr[num].images.fixed_height_still.width + "px;");
@@ -208,6 +230,7 @@ $(document).ready(function () {
         return imageContainer;
     };
 
+    // Function to remove the currently shown gifs from the page.
     function clearGifs() {
         $("#gif-gallery").empty();
     };
@@ -228,6 +251,7 @@ $(document).ready(function () {
         });
     };
 
+    // Function to remove the currently shown weather information from the page.
     function clearWeather() {
         $("#current-conditions").empty();
     };
