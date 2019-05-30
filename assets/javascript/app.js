@@ -212,18 +212,24 @@ $(document).ready(function () {
         $("#gif-gallery").empty();
     };
 
+    // If the words searched is not a city, a 404 is returned (behind the scenes). A message is display but the gifs will still be shown.
+    // Source: https://thisinterestsme.com/handle-ajax-error-jquery/
     function getWeather(str) {
         $.ajax({
             url: str,
-            method: "GET"
-        }).then(function (response) {
-            var tempF = (Math.floor((response.main.temp - 273.15) * 1.80 + 32));
-            $("#current-conditions").text("In " + response.name + ", it is currently " + tempF + " F\u00B0 and " + response.weather[0].description + ".");
+            method: "GET",
+            success: function (response) {
+                var tempF = (Math.floor((response.main.temp - 273.15) * 1.80 + 32));
+                $("#current-conditions").text("In " + response.name + ", it is currently " + tempF + " F\u00B0 and " + response.weather[0].description + ".");
+            },
+            error: function () {
+                $("#current-conditions").text("Whoops! 😕 This is not a valid location.");
+            }
         });
     };
 
     function clearWeather() {
         $("#current-conditions").empty();
-    }
+    };
 
 });

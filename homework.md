@@ -59,9 +59,9 @@ Having an active and healthy commit history on GitHub is important for your futu
 
 6. Add a form to your page that takes a value from a user input box and adds it to your `topics` array. Then make a function call that takes each topic in the array and remakes the buttons on the page. ***DONE***
 
-7. Deploy your assignment to Github Pages.
+7. Deploy your assignment to Github Pages. ***DONE***
 
-8. **Rejoice**! You just made something really cool.
+8. **Rejoice**! You just made something really cool. ***DONE***
 
 - - -
 
@@ -80,9 +80,9 @@ Attempt to complete homework assignment as described in instructions. If unable 
 
 3. List additional metadata (title, tags, etc) for each gif in a clean and readable format. ***DONE***
 
-4. Integrate this search with additional APIs such as OMDB, or Bands in Town. Be creative and build something you are proud to showcase in your portfolio
+4. Integrate this search with additional APIs such as OMDB, or Bands in Town. Be creative and build something you are proud to showcase in your portfolio ***DONE***
 
-5. Allow users to add their favorite gifs to a `favorites` section.
+5. Allow users to add their favorite gifs to a `favorites` section. ***DONE***
    * This should persist even when they select or add a new topic.
    * If you are looking for a major challenge, look into making this section persist even when the page is reloaded(via localStorage or cookies).
 
