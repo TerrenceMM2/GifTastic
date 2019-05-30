@@ -8,4 +8,8 @@ A textbox is provided to allow for user-gererated searches. After clicking "subm
 
 Once gifs are displayed, optional "Show Me More" and "Clear" button will be displays. Furthermore, individual gifs can be favorited by selecting the ⭐️. Favorited gifs can be viewed by selecting the "My Favorites" button.
 
-Optional, display options are available. "Movement" will toggle the gifs in the title and the "Dark Mode" will toggle between light and dark page displays.
+Optional, display options are available. "Movement" will toggle the gifs in the title and the "Dark Mode" will toggle between light and dark page displays.  
+
+### In-Progress  
+* Mobile Responsiveness  
+* Stored selected favorites in localStorage or Cookie.
