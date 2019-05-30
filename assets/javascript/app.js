@@ -27,7 +27,8 @@ $(document).ready(function () {
     };
 
     $("#button-group").on("click", ".btn", function () {
-        $("#more-gifs").show();
+        $("#more-gifs").css("visibility", "visible");
+        $("#clear-gifs").css("visibility", "visible");
         offsetNumber = 0;
         clearGifs();
         topicGifs = [];
@@ -95,9 +96,19 @@ $(document).ready(function () {
 
     $("#fav-gifs").on("click", function () {
         event.preventDefault();
+        topicGifs = "";
         clearGifs();
         generateGif(0, favGifs);
         clearWeather();
+        $("#more-gifs").css("visibility", "hidden");
+        $("#clear-gifs").css("visibility", "hidden");
+    });
+
+    $("#clear-gifs").on("click", function () {
+        clearGifs();
+        clearWeather();
+        $("#clear-gifs").css("visibility", "hidden");
+        $("#more-gifs").css("visibility", "hidden");
     });
 
     $("#darkModeToggle").on("click", function () {

@@ -19,34 +19,64 @@
 </head>
 
 <body>
+  <div class="container">
 
-  <header class="row align-items-center justify-content-center">
-    <span class="title">Fun with </span><img class="title-gif" id="letter0"></img><img class="title-gif"
-      id="letter1"></img><img class="title-gif" id="letter2"></img><img class="title-gif" id="letter3"></img>
-  </header>
+    <header class="row align-items-center justify-content-center">
+      <span class="title">Fun with </span><img class="title-gif" id="letter0"></img><img class="title-gif"
+        id="letter1"></img><img class="title-gif" id="letter2"></img><img class="title-gif" id="letter3"></img>
+    </header>
 
-  <div class="text-center custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="movementToggle" checked>
-    <label class="custom-control-label" for="movementToggle">Movement</label>
-  </div>
-
-  <div class="text-center custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="darkModeToggle">
-    <label class="custom-control-label" for="darkModeToggle">Dark Mode</label>
-  </div>
-
-  <form class="user-form">
-    <div class="form-row justify-content-center">
-      <div class="form-group col-md-auto">
-        <label for="user-input">Search</label>
-        <input type="text" class="form-control" id="user-input" required="true">
-        <small id="searchHelp" class="form-text">Please enter a city of your choice.</small>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <div class="container">
+            <div class="row justify-content-end">
+              <div class="text-right custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="movementToggle" checked>
+                <label class="custom-control-label" for="movementToggle">Movement</label>
+              </div>
+            </div>
+            <div class="row justify-content-end">
+              <div class="text-right custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="darkModeToggle">
+                <label class="custom-control-label" for="darkModeToggle">Dark Mode</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 align-self-center">
+          <button id="fav-gifs" class="my-auto btn btn-warning">My Favorites</button>
+        </div>
       </div>
-      <button type="submit" id="user-submit" class="my-auto btn btn-primary">Submit</button>
-      <button id="more-gifs" class="my-auto btn btn-primary">Show Me More</button>
-      <button id="fav-gifs" class="my-auto btn btn-primary">My Favorites</button>
     </div>
-  </form>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-6 align-self-center">
+          <form class="user-form">
+            <div class="form-row justify-content-end">
+              <div class="form-group col-md-auto">
+                <label for="user-input">Search</label>
+                <input type="text" class="form-control" id="user-input" required="true">
+                <small id="searchHelp" class="form-text">Please enter a city of your choice.</small>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-6">
+          <div class="container">
+            <div id="submit-row" class="row justify-content-start">
+              <button type="submit" id="user-submit" class="my-auto btn btn-primary">Submit</button>
+            </div>
+            <div id="aux-row" class="row justify-content-start">
+              <button id="more-gifs" class="my-auto btn btn-sm btn-success">Show Me More</button>
+              <button id="clear-gifs" class="my-auto btn btn-sm btn-danger">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="row weather justify-content-center">
     <p id="current-conditions"></p>
@@ -74,6 +104,7 @@
       </div>
     </div>
   </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
@@ -81,6 +112,7 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
   <script type="text/javascript" src="assets/javascript/app.js"></script>
+
 </body>
 
 </html>

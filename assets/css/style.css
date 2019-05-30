@@ -1,3 +1,7 @@
+html {
+    overflow-y: overlay;
+}
+
 body {
     width: 90%;
     margin: 0 auto;
@@ -45,12 +49,31 @@ figure {
     color: darkgray;
 }
 
-#more-gifs {
-    display: none;
+#submit-row {
+    margin-top: 2rem;
+}
+
+#aux-row {
+    margin-top: .3rem;
+}
+
+.btn-sm {
+    padding: 0 .25rem;
+    font-size: .75rem;
+}
+
+#more-gifs, #clear-gifs {
+    visibility: hidden;
 }
 
 .btn {
     margin: 0 .25rem .5rem .25rem;
+}
+
+#current-conditions {
+    height: 1.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .modal-body p {
