@@ -18,11 +18,6 @@ $(document).ready(function () {
 
     createGifTitle("fixed_height_small");
 
-    // var nutritionTopic = activeGif;
-    // var nutritionApiKey = "ef1557de06mshdcf3099eaace12dp128ffejsn390f022c636c";
-    // var nutritionURL = "https://nutritionix-api.p.rapidapi.com/v1_1/search/";
-    // var nutritionString = "";
-
     for (var i = 0; i < topic.length; i++) {
         generateButton(topic[i]);
     };
@@ -115,7 +110,7 @@ $(document).ready(function () {
     // Source: https://stackoverflow.com/questions/21373643/jquery-ajax-calls-in-a-for-loop
     function createGifTitle(str) {
         for (var t = 0; t < titleArray.length; t++) {
-            (function(t) {
+            (function (t) {
                 $.ajax({
                     url: titleQueryURL + titleArray[t] + "api_key=" + queryApiKey,
                     method: "GET",
@@ -137,10 +132,6 @@ $(document).ready(function () {
         return queryString = queryURL + "api_key=" + queryApiKey + "&" + "q=" + str + "&" + "limit=10" + "&" + "offset=" + num;
     };
 
-    // function generateNutritionURL(str) {
-    //     return nutritionString = nutritionURL + nutritionTopic + "&" + "api_key=" + nutritionApiKey;
-    // }
-
     function getGifs(str) {
         $.ajax({
             url: str,
@@ -156,38 +147,42 @@ $(document).ready(function () {
     };
 
     function generateGif(num, arr) {
-        console.log(arr);
         var index = num + 10;
         for (var k = num; k < index; k++) {
-            var imageContainer = $("<figure>").addClass("figure");
-            imageContainer.attr("style", "width: " + arr[k].images.fixed_height_still.width + "px;");
-            var imageGif = $("<img>").attr("src", arr[k].images.fixed_height_still.url);
-            imageGif.addClass("gif figure-img img-fluid rounded");
-            imageGif.attr("alt", arr[k].title);
-            imageGif.attr("data-value", k);
-            imageGif.attr("data-moving", "off");
-            var imageFav = $("<figcaption>");
-            if (arr[k].favorite) {
-                var imageText = '<i id="fav" class="fas fa-star float-right" data-fav="true" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
-            } else {
-                var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
-            };
-            // var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
-            imageFav.html(imageText);
-            var imageRating = $("<figcaption>");
-            var ratingText = "Rated: " + arr[k].rating.toUpperCase();
-            imageRating.text(ratingText);
-            imageRating.addClass("figure-caption text-left");
-            var imageTitle = $("<figcaption>");
-            var titleText = arr[k].title.italics();
-            imageTitle.html(titleText);
-            imageTitle.addClass("figure-caption text-left");
-            imageContainer.append(imageGif);
-            imageContainer.append(imageFav);
-            imageContainer.append(imageRating);
-            imageContainer.append(imageTitle);
-            $("#gif-gallery").append(imageContainer);
+            var newGif = buildGif(k, arr);
+            $("#gif-gallery").append(newGif);
         };
+    };
+
+
+    function buildGif(num, arr) {
+        var imageContainer = $("<figure>").addClass("figure");
+        imageContainer.attr("style", "width: " + arr[num].images.fixed_height_still.width + "px;");
+        var imageGif = $("<img>").attr("src", arr[num].images.fixed_height_still.url);
+        imageGif.addClass("gif figure-img img-fluid rounded");
+        imageGif.attr("alt", arr[num].title);
+        imageGif.attr("data-value", num);
+        imageGif.attr("data-moving", "off");
+        var imageFav = $("<figcaption>");
+        if (arr[num].favorite) {
+            var imageText = '<i id="fav" class="fas fa-star float-right" data-fav="true" data-value=' + num + ' data-id=' + arr[num].id + '></i>';
+        } else {
+            var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + num + ' data-id=' + arr[num].id + '></i>';
+        };
+        imageFav.html(imageText);
+        var imageRating = $("<figcaption>");
+        var ratingText = "Rated: " + arr[num].rating.toUpperCase();
+        imageRating.text(ratingText);
+        imageRating.addClass("figure-caption text-left");
+        var imageTitle = $("<figcaption>");
+        var titleText = arr[num].title.italics();
+        imageTitle.html(titleText);
+        imageTitle.addClass("figure-caption text-left");
+        imageContainer.append(imageGif);
+        imageContainer.append(imageFav);
+        imageContainer.append(imageRating);
+        imageContainer.append(imageTitle);
+        return imageContainer;
     };
 
     function clearGifs() {
