@@ -3,7 +3,7 @@ $(document).ready(function () {
     var titleArray = ["26xBJJEETvqGHxVIc?", "l3q2GccupHgLPBqZG?", "l3q2PG0N4D2kUua3e?", "d3mmB85lPiyE5jvq?"];
     var titleQueryURL = "https://api.giphy.com/v1/gifs/";
 
-    var topic = ["New York", "Key West", "San Francisco", "Vancouver", "Rio de Janeiro", "Rome", "Paris", "London", "Tokyo", "Abu Dhabi", "Hong Kong", "Sydney", "Bahamas", "Beijing", "Budapest", "Athens", "Madrid"];
+    var topic = ["New York", "Key West", "San Francisco", "Vancouver", "Rio de Janeiro", "Rome", "Paris", "London", "Tokyo", "Abu Dhabi", "Hong Kong", "Sydney", "Beijing", "Budapest", "Athens", "Madrid"];
 
     var queryTopic = "";
     var queryApiKey = "k4lIc25Cnm8PVmdTTePqX37D2HFooSyY";
