@@ -17,6 +17,10 @@ body {
     margin-right: -5rem;
 }
 
+#searchHelp {
+    color: darkgray;
+}
+
 .user-form {
     margin-bottom: 1rem;
 }
@@ -31,6 +35,14 @@ body {
 
 figure {
     margin-right: 1rem;
+}
+
+.fas {
+    color: gold;
+}
+
+.far {
+    color: darkgray;
 }
 
 #more-gifs {

@@ -40,7 +40,7 @@
       <div class="form-group col-md-auto">
         <label for="user-input">Search</label>
         <input type="text" class="form-control" id="user-input" required="true">
-        <small id="emailHelp" class="form-text text-muted">Try searching for your favorite food.</small>
+        <small id="searchHelp" class="form-text">Please enter a city of your choice.</small>
       </div>
       <button type="submit" id="user-submit" class="my-auto btn btn-primary">Submit</button>
       <button id="more-gifs" class="my-auto btn btn-primary">Show Me More</button>
@@ -48,11 +48,15 @@
     </div>
   </form>
 
+  <div class="row weather justify-content-center">
+    <p id="current-conditions"></p>
+  </div>
+
   <div id="button-group" class="row flex-wrap no-gutters"></div>
 
   <div id="gif-gallery" class="d-flex flex-wrap"></div>
 
-  <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

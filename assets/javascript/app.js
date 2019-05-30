@@ -3,12 +3,16 @@ $(document).ready(function () {
     var titleArray = ["26xBJJEETvqGHxVIc?", "l3q2GccupHgLPBqZG?", "l3q2PG0N4D2kUua3e?", "d3mmB85lPiyE5jvq?"];
     var titleQueryURL = "https://api.giphy.com/v1/gifs/";
 
-    var topic = ["happy", "sad", "disappointed", "mad", "scared", "excited", "mysterious", "mischievous", "crazy", "depressed", "lonely", "confused", "sneaky", "amorous"];
+    var topic = ["New York", "Key West", "San Francisco", "Vancouver", "Rio de Janeiro", "Rome", "Paris", "London", "Tokyo", "Abu Dhabi", "Hong Kong", "Sydney", "Bahamas", "Beijing", "Budapest", "Athens", "Madrid"];
 
     var queryTopic = "";
     var queryApiKey = "k4lIc25Cnm8PVmdTTePqX37D2HFooSyY";
     var queryURL = "https://api.giphy.com/v1/gifs/search?";
     var queryString = "";
+
+    var weatherApiKey = "9f948945c2a7499da3eb43a912f67a23";
+    var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?";
+    var weatherQueryString = "";
 
     var topicGifs = [];
     var activeGif = "";
@@ -31,6 +35,8 @@ $(document).ready(function () {
         queryTopic = $(this).text();
         generateURL(queryTopic, offsetNumber);
         getGifs(queryString);
+        generateWeatherURL(queryTopic);
+        getWeather(weatherQueryString);
     });
 
     $("#gif-gallery").on("click", ".gif", function () {
@@ -64,30 +70,34 @@ $(document).ready(function () {
     });
 
     $("#gif-gallery").on("click", "#fav", function () {
-        var favValue = $(this).data("fav")
+        var favValue = $(this).data("fav");
         var dataValue = $(this).data("value");
         var gifIdValue = $(this).data("id");
+        console.log(favValue);
         if (favValue === false) {
+            console.log("favorited");
             $(this).removeClass("far").addClass("fas");
-            $(this).attr("data-fav", "true");
+            $(this).data("fav", true);
             topicGifs[dataValue].favorite = true;
             favGifs.push(topicGifs[dataValue]);
         } else {
+            console.log("unfavorited");
             $(this).removeClass("fas").addClass("far");
-            $(this).attr("data-fav", "false");
+            $(this).data("fav", false);
             topicGifs[dataValue].favorite = false;
             for (var l = 0; l < favGifs.length; l++) {
                 if (favGifs[l].id === gifIdValue) {
                     favGifs.splice(l, 1);
                 };
             };
-        };
+        }
     });
 
     $("#fav-gifs").on("click", function () {
         event.preventDefault();
         clearGifs();
         generateGif(0, favGifs);
+        clearWeather();
     });
 
     $("#darkModeToggle").on("click", function () {
@@ -132,6 +142,10 @@ $(document).ready(function () {
         return queryString = queryURL + "api_key=" + queryApiKey + "&" + "q=" + str + "&" + "limit=10" + "&" + "offset=" + num;
     };
 
+    function generateWeatherURL(str) {
+        return weatherQueryString = weatherQueryURL + "q=" + str + "&" + "APPID=" + weatherApiKey;
+    };
+
     function getGifs(str) {
         $.ajax({
             url: str,
@@ -147,13 +161,11 @@ $(document).ready(function () {
     };
 
     function generateGif(num, arr) {
-        var index = num + 10;
-        for (var k = num; k < index; k++) {
+        for (var k = num; k < arr.length; k++) {
             var newGif = buildGif(k, arr);
             $("#gif-gallery").append(newGif);
         };
     };
-
 
     function buildGif(num, arr) {
         var imageContainer = $("<figure>").addClass("figure");
@@ -188,5 +200,19 @@ $(document).ready(function () {
     function clearGifs() {
         $("#gif-gallery").empty();
     };
+
+    function getWeather(str) {
+        $.ajax({
+            url: str,
+            method: "GET"
+        }).then(function (response) {
+            var tempF = (Math.floor((response.main.temp - 273.15) * 1.80 + 32));
+            $("#current-conditions").text("In " + response.name + ", it is currently " + tempF + " F\u00B0 and " + response.weather[0].description + ".");
+        });
+    };
+
+    function clearWeather() {
+        $("#current-conditions").empty();
+    }
 
 });
