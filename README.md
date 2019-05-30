@@ -1,5 +1,6 @@
 # coursework6-giftastic
-Vanderbilt Coding Boot Camp - Coursework 6 - GifTastic
+Vanderbilt Coding Boot Camp - Coursework 6 - GifTastic  
+Live Link: https://terrencemm2.github.io/coursework6-giftastic/
   
 ## Instructions  
 The GifTastic application pulls gifs (from Giphy API) based on the terms found in each button. Because the theme is international destinations, the current temperature and outside conditions (from openweathermap.org API) are also displayed. If a search is not a valid city, a message is be displayed but gifs based on the selected term will be searched.
