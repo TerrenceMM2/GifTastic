@@ -27,22 +27,6 @@ $(document).ready(function () {
         generateButton(topic[i]);
     };
 
-    // Nests ajax call within a for loop
-    // Source: https://stackoverflow.com/questions/21373643/jquery-ajax-calls-in-a-for-loop
-    function createGifTitle(str) {
-        for (var t = 0; t < titleArray.length; t++) {
-            (function(t) {
-                $.ajax({
-                    url: titleQueryURL + titleArray[t] + "api_key=" + queryApiKey,
-                    method: "GET",
-                    success: function (response) {
-                        $("#letter" + t).attr("src", response.data.images[str].url);
-                    }
-                });
-            })(t);
-        };
-    };
-
     $("#button-group").on("click", ".btn", function () {
         $("#more-gifs").show();
         offsetNumber = 0;
@@ -90,12 +74,12 @@ $(document).ready(function () {
         var gifIdValue = $(this).data("id");
         if (favValue === false) {
             $(this).removeClass("far").addClass("fas");
-            $(this).data("fav", true);
+            $(this).attr("data-fav", "true");
             topicGifs[dataValue].favorite = true;
             favGifs.push(topicGifs[dataValue]);
         } else {
             $(this).removeClass("fas").addClass("far");
-            $(this).data("fav", false);
+            $(this).attr("data-fav", "false");
             topicGifs[dataValue].favorite = false;
             for (var l = 0; l < favGifs.length; l++) {
                 if (favGifs[l].id === gifIdValue) {
@@ -127,6 +111,22 @@ $(document).ready(function () {
         }
     });
 
+    // Nests ajax call within a for loop
+    // Source: https://stackoverflow.com/questions/21373643/jquery-ajax-calls-in-a-for-loop
+    function createGifTitle(str) {
+        for (var t = 0; t < titleArray.length; t++) {
+            (function(t) {
+                $.ajax({
+                    url: titleQueryURL + titleArray[t] + "api_key=" + queryApiKey,
+                    method: "GET",
+                    success: function (response) {
+                        $("#letter" + t).attr("src", response.data.images[str].url);
+                    }
+                });
+            })(t);
+        };
+    };
+
     function generateButton(str) {
         var newButton = $("<button>").text(str);
         newButton.addClass("btn btn-info btn-lg");
@@ -156,6 +156,7 @@ $(document).ready(function () {
     };
 
     function generateGif(num, arr) {
+        console.log(arr);
         var index = num + 10;
         for (var k = num; k < index; k++) {
             var imageContainer = $("<figure>").addClass("figure");
@@ -166,7 +167,12 @@ $(document).ready(function () {
             imageGif.attr("data-value", k);
             imageGif.attr("data-moving", "off");
             var imageFav = $("<figcaption>");
-            var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
+            if (arr[k].favorite) {
+                var imageText = '<i id="fav" class="fas fa-star float-right" data-fav="true" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
+            } else {
+                var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
+            };
+            // var imageText = '<i id="fav" class="far fa-star float-right" data-fav="false" data-value=' + k + ' data-id=' + arr[k].id + '></i>';
             imageFav.html(imageText);
             var imageRating = $("<figcaption>");
             var ratingText = "Rated: " + arr[k].rating.toUpperCase();
@@ -176,10 +182,10 @@ $(document).ready(function () {
             var titleText = arr[k].title.italics();
             imageTitle.html(titleText);
             imageTitle.addClass("figure-caption text-left");
-            $(imageContainer).append(imageGif);
-            $(imageContainer).append(imageFav);
-            $(imageContainer).append(imageRating);
-            $(imageContainer).append(imageTitle);
+            imageContainer.append(imageGif);
+            imageContainer.append(imageFav);
+            imageContainer.append(imageRating);
+            imageContainer.append(imageTitle);
             $("#gif-gallery").append(imageContainer);
         };
     };
