@@ -18,7 +18,7 @@ $(document).ready(function () {
     var activeGif = "";
     var offsetNumber = 0;
 
-    var favGifs = [];
+    var favGifs = JSON.parse(localStorage.getItem("favoriteGifs") || "[]");;
 
     // Performs an initial AJAX call to create the page title using gifs.
     createGifTitle("fixed_height_small");
@@ -95,25 +95,28 @@ $(document).ready(function () {
         } else {
             $(this).removeClass("fas").addClass("far");
             $(this).data("fav", false);
-            topicGifs[dataValue].favorite = false;
+            // topicGifs[dataValue].favorite = false;
             for (var l = 0; l < favGifs.length; l++) {
                 if (favGifs[l].id === gifIdValue) {
                     favGifs.splice(l, 1);
+                    $(this).closest(".figure").remove();
                 };
             };
-        }
+        };
+        localStorage.setItem("favoriteGifs", JSON.stringify(favGifs));
+
     });
 
     // If the "My Favorites" button is clicked ...
     // ... The gif are generated based on the storage objects in the favGifs array.
     $("#fav-gifs").on("click", function () {
+        $("#clear-gifs").css("visibility", "visible");
         event.preventDefault();
         topicGifs = "";
         clearGifs();
         generateGif(0, favGifs);
         clearWeather();
         $("#more-gifs").css("visibility", "hidden");
-        $("#clear-gifs").css("visibility", "hidden");
     });
 
     // If the "Clear" button is clicked ...
@@ -141,6 +144,19 @@ $(document).ready(function () {
         } else {
             createGifTitle("fixed_height_small_still");
         }
+    });
+
+    // Prevents page from refreshing
+    $("form").submit(function(event) {
+        event.preventDefault();
+        var searchedWord = $("#user-input").val().trim();
+        if (searchedWord === "") {
+            $(".modal").modal("show");
+        } else {
+            topicGifs.push(searchedWord);
+            generateButton(searchedWord);
+            $("#user-input").val("");
+        };
     });
 
     // Nests ajax call within a for loop
