@@ -63,7 +63,11 @@ figure {
     font-size: .75rem;
 }
 
-#more-gifs, #clear-gifs {
+.btn-warning:focus, .btn-info:focus, .btn-danger:focus, .btn-success:focus, .btn-primary:focus {
+    box-shadow: none;
+}
+
+#more-gifs, #clear-gifs, #clear-storage {
     visibility: hidden;
 }
 

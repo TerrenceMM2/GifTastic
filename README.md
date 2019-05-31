@@ -7,10 +7,9 @@ The GifTastic application pulls gifs (from Giphy API) based on the terms found i
 
 A textbox is provided to allow for user-gererated searches. After clicking "submit", an additional button will be displayed that can be clicked on to generate the gif and weather search. If the submit button is clicked when the textbox is empty, a modal message will be shown inform the user that a valid search term is required.
 
-Once gifs are displayed, optional "Show Me More" and "Clear" button will be displays. Furthermore, individual gifs can be favorited by selecting the ⭐️. Favorited gifs can be viewed by selecting the "My Favorites" button.
+Once gifs are displayed, optional "Show Me More" and "Clear" button will be displays. Furthermore, individual gifs can be favorited by selecting the ⭐️. Favorited gifs can be viewed by selecting the "My Favorites" button and are stored for as long as the browser window is open. The "Purge" button can be clicked to removed all favorited gifs from local storage.
 
 Optional, display options are available. "Movement" will toggle the gifs in the title and the "Dark Mode" will toggle between light and dark page displays.  
 
 ### In-Progress  
 * Mobile Responsiveness  
-* Stored selected favorites in localStorage or Cookie.

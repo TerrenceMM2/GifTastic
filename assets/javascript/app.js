@@ -33,6 +33,8 @@ $(document).ready(function () {
     $("#button-group").on("click", ".btn", function () {
         $("#more-gifs").css("visibility", "visible");
         $("#clear-gifs").css("visibility", "visible");
+        $("#clear-storage").css("visibility", "hidden");
+        $("#gif-gallery").attr("data-array", "topic");
         offsetNumber = 0;
         clearGifs();
         topicGifs = [];
@@ -65,7 +67,7 @@ $(document).ready(function () {
         event.preventDefault();
         var searchedWord = $("#user-input").val().trim();
         if (searchedWord === "") {
-            $(".modal").modal("show");
+            $("#null-input").modal("show");
         } else {
             topicGifs.push(searchedWord);
             generateButton(searchedWord);
@@ -84,6 +86,7 @@ $(document).ready(function () {
     // If a favorite icon is clicked ...
     // ... the font-awesome icon is changed, the gif object is pushed to the favGifs array, and the data values set.
     $("#gif-gallery").on("click", "#fav", function () {
+        var parentValue = $(this).closest("div").attr("data-array");
         var favValue = $(this).data("fav");
         var dataValue = $(this).data("value");
         var gifIdValue = $(this).data("id");
@@ -92,10 +95,17 @@ $(document).ready(function () {
             $(this).data("fav", true);
             topicGifs[dataValue].favorite = true;
             favGifs.push(topicGifs[dataValue]);
+        } else if (favValue === true && parentValue === "topic") {
+            $(this).removeClass("fas").addClass("far");
+            $(this).data("fav", false);
+            for (var l = 0; l < favGifs.length; l++) {
+                if (favGifs[l].id === gifIdValue) {
+                    favGifs.splice(l, 1);
+                };
+            };        
         } else {
             $(this).removeClass("fas").addClass("far");
             $(this).data("fav", false);
-            // topicGifs[dataValue].favorite = false;
             for (var l = 0; l < favGifs.length; l++) {
                 if (favGifs[l].id === gifIdValue) {
                     favGifs.splice(l, 1);
@@ -104,15 +114,21 @@ $(document).ready(function () {
             };
         };
         localStorage.setItem("favoriteGifs", JSON.stringify(favGifs));
-
     });
 
     // If the "My Favorites" button is clicked ...
     // ... The gif are generated based on the storage objects in the favGifs array.
     $("#fav-gifs").on("click", function () {
-        $("#clear-gifs").css("visibility", "visible");
+        if (favGifs.length === 0) {
+            $("#clear-gifs").css("visibility", "hidden");
+            $("#clear-storage").css("visibility", "hidden");
+        } else {
+            $("#clear-gifs").css("visibility", "visible");
+            $("#clear-storage").css("visibility", "visible");
+        };
+        $("#gif-gallery").attr("data-array", "favs");
         event.preventDefault();
-        topicGifs = "";
+        topicGifs = [];
         clearGifs();
         generateGif(0, favGifs);
         clearWeather();
@@ -126,6 +142,13 @@ $(document).ready(function () {
         clearWeather();
         $("#clear-gifs").css("visibility", "hidden");
         $("#more-gifs").css("visibility", "hidden");
+    });
+
+    $("#clear-storage").on("click", function () {
+        $("#purge-message").modal("show");
+        localStorage.removeItem("favoriteGifs");
+        favGifs = [];
+        clearGifs();
     });
 
     // Toggles dark mode (i.e. two different stylesheets).
@@ -151,7 +174,7 @@ $(document).ready(function () {
         event.preventDefault();
         var searchedWord = $("#user-input").val().trim();
         if (searchedWord === "") {
-            $(".modal").modal("show");
+            // $("#null-input").modal("show");
         } else {
             topicGifs.push(searchedWord);
             generateButton(searchedWord);
