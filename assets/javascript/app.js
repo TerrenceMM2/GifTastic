@@ -102,7 +102,7 @@ $(document).ready(function () {
                 if (favGifs[l].id === gifIdValue) {
                     favGifs.splice(l, 1);
                 };
-            };        
+            };
         } else {
             $(this).removeClass("fas").addClass("far");
             $(this).data("fav", false);
@@ -149,6 +149,9 @@ $(document).ready(function () {
         localStorage.removeItem("favoriteGifs");
         favGifs = [];
         clearGifs();
+        $("#clear-gifs").css("visibility", "hidden");
+        $("#more-gifs").css("visibility", "hidden");
+        $("#clear-storage").css("visibility", "hidden");
     });
 
     // Toggles dark mode (i.e. two different stylesheets).
@@ -170,7 +173,7 @@ $(document).ready(function () {
     });
 
     // Prevents page from refreshing
-    $("form").submit(function(event) {
+    $("form").submit(function (event) {
         event.preventDefault();
         var searchedWord = $("#user-input").val().trim();
         if (searchedWord === "") {
@@ -236,6 +239,7 @@ $(document).ready(function () {
             var newGif = buildGif(k, arr);
             $("#gif-gallery").append(newGif);
         };
+
     };
 
     // Dynamically creates the Gif parent div and the child elements (rating text, title text, favorite icon, and the gif image).
