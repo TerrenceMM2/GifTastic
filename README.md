@@ -1,6 +1,6 @@
 # coursework6-giftastic
 Vanderbilt Coding Boot Camp - Coursework 6 - GifTastic  
-Live Link: https://terrencemm2.github.io/coursework6-giftastic/
+Live Link: https://terrencemm2.github.io/GifTastic/
   
 ## Purpose
 GifTastic is a fun and interactive web application for searching and locally saving for your favorite gifs. This apps demonstrates the use of AJAX and using APIs.
