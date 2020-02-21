@@ -1,5 +1,4 @@
-# coursework6-giftastic
-Vanderbilt Coding Boot Camp - Coursework 6 - GifTastic  
+# GifTastic 
 Live Link: https://terrencemm2.github.io/GifTastic/
   
 ## Purpose
